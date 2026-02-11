@@ -37,6 +37,227 @@
             min-height: 100vh;
         }
 
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            background: var(--bg-darker);
+        }
+
+        .login-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .login-input-group {
+            position: relative;
+        }
+
+        .login-input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-input-wrapper {
+            position: relative;
+        }
+
+        .login-input {
+            width: 100%;
+            background: var(--bg-dark);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1rem 1rem 3rem;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.1);
+        }
+
+        .login-input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--accent-blue);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: none;
+        }
+
+        .login-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent-blue);
+        }
+
+        .remember-me label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin: 0;
+            text-transform: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(88, 166, 255, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 8px;
+            padding: 0.875rem;
+            color: var(--accent-red);
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .login-footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .login-footer p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .app-content {
+            display: none;
+        }
+
+        .app-content.active {
+            display: block;
+        }
+
         .container {
             max-width: 1800px;
             margin: 0 auto;
@@ -695,6 +916,10 @@
             .charts-grid {
                 grid-template-columns: 1fr;
             }
+
+            .login-container {
+                padding: 2.5rem 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -726,6 +951,18 @@
                 min-width: 120px;
                 padding: 0.75rem 1.25rem;
                 font-size: 0.85rem;
+            }
+
+            .login-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-icon {
+                font-size: 3.5rem;
+            }
+
+            .login-title {
+                font-size: 1.75rem;
             }
 
             .tabs {
@@ -883,6 +1120,42 @@
                 min-width: 0;
             }
 
+            .login-container {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .login-icon {
+                font-size: 3rem;
+            }
+
+            .login-title {
+                font-size: 1.5rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .login-input {
+                padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+                font-size: 0.95rem;
+            }
+
+            .login-input-icon {
+                left: 0.875rem;
+                font-size: 1.1rem;
+            }
+
+            .login-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .login-btn {
+                padding: 0.875rem;
+                font-size: 0.9rem;
+            }
+
             .tabs {
                 gap: 0.25rem;
             }
@@ -1015,6 +1288,71 @@
     </style>
 </head>
 <body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-icon">💰</div>
+                <h1 class="login-title">Dashboard Financeiro</h1>
+                <p class="login-subtitle">Faça login para acessar seu gerenciador</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="error-message" id="errorMessage">
+                    Senha incorreta. Tente novamente.
+                </div>
+
+                <div class="login-input-group">
+                    <label for="username">Usuário</label>
+                    <div class="login-input-wrapper">
+                        <span class="login-input-icon">👤</span>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            class="login-input" 
+                            placeholder="Digite seu usuário"
+                            value="admin"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="login-input-group">
+                    <label for="password">Senha</label>
+                    <div class="login-input-wrapper">
+                        <span class="login-input-icon">🔒</span>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="login-input" 
+                            placeholder="Digite sua senha"
+                            required
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            👁️
+                        </button>
+                    </div>
+                </div>
+
+                <div class="login-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <label for="rememberMe">Lembrar-me</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+
+            <div class="login-footer">
+                <p><strong>Senha padrão:</strong> admin123</p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">Você pode alterar a senha nas configurações após o login</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Content -->
+    <div id="appContent" class="app-content">
     <div class="container">
         <header>
             <div class="header-content">
@@ -1023,6 +1361,8 @@
                     <button onclick="openModal()" class="primary">+ Nova Transação</button>
                     <button onclick="exportData()" class="secondary">📥 Exportar</button>
                     <button onclick="importData()" class="secondary">📤 Importar</button>
+                    <button onclick="changePassword()" class="secondary">🔑 Senha</button>
+                    <button onclick="logout()" class="secondary">🚪 Sair</button>
                 </div>
             </div>
         </header>
@@ -1250,6 +1590,11 @@
             </form>
         </div>
     </div>
+
+    </div>
+    <!-- Fim do container -->
+    </div>
+    <!-- Fim do app-content -->
 
     <script>
         let transactions = [];
@@ -2274,6 +2619,117 @@
                 closeModal();
             }
         });
+
+        // ===== SISTEMA DE LOGIN =====
+        const DEFAULT_PASSWORD = 'admin123';
+        const PASSWORD_STORAGE_KEY = 'dashboardPassword';
+        const SESSION_STORAGE_KEY = 'dashboardSession';
+        const REMEMBER_ME_KEY = 'dashboardRememberMe';
+
+        // Verificar se já está logado
+        function checkSession() {
+            const session = sessionStorage.getItem(SESSION_STORAGE_KEY);
+            const rememberMe = localStorage.getItem(REMEMBER_ME_KEY);
+            
+            if (session === 'active' || rememberMe === 'true') {
+                showApp();
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = event.target;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Verificar senha (pode ser customizada pelo usuário ou usar a padrão)
+            const savedPassword = localStorage.getItem(PASSWORD_STORAGE_KEY) || DEFAULT_PASSWORD;
+            
+            if (password === savedPassword) {
+                // Login bem-sucedido
+                sessionStorage.setItem(SESSION_STORAGE_KEY, 'active');
+                
+                if (rememberMe) {
+                    localStorage.setItem(REMEMBER_ME_KEY, 'true');
+                } else {
+                    localStorage.removeItem(REMEMBER_ME_KEY);
+                }
+                
+                showApp();
+            } else {
+                // Senha incorreta
+                errorMessage.classList.add('show');
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+                
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 3000);
+            }
+        });
+
+        // Mostrar aplicação
+        function showApp() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContent').classList.add('active');
+            loadFromStorage();
+            setTodayDate();
+            updateDashboard();
+            updateAnalysis();
+            populateMonthFilter();
+            populateCategoryFilter();
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Deseja realmente sair?')) {
+                sessionStorage.removeItem(SESSION_STORAGE_KEY);
+                localStorage.removeItem(REMEMBER_ME_KEY);
+                location.reload();
+            }
+        }
+
+        // Alterar senha
+        function changePassword() {
+            const currentPassword = prompt('Digite a senha atual:');
+            const savedPassword = localStorage.getItem(PASSWORD_STORAGE_KEY) || DEFAULT_PASSWORD;
+            
+            if (currentPassword === savedPassword) {
+                const newPassword = prompt('Digite a nova senha:');
+                if (newPassword && newPassword.length >= 6) {
+                    const confirmPassword = prompt('Confirme a nova senha:');
+                    if (newPassword === confirmPassword) {
+                        localStorage.setItem(PASSWORD_STORAGE_KEY, newPassword);
+                        alert('Senha alterada com sucesso!');
+                    } else {
+                        alert('As senhas não coincidem.');
+                    }
+                } else {
+                    alert('A senha deve ter pelo menos 6 caracteres.');
+                }
+            } else {
+                alert('Senha atual incorreta.');
+            }
+        }
+
+        // Verificar sessão ao carregar a página
+        checkSession();
     </script>
 </body>
 </html>
