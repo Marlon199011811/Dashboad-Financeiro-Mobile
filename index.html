@@ -321,38 +321,49 @@
             box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
         }
 
-        .radio-group {
-            display: flex;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            flex-wrap: wrap;
         }
 
-        .radio-option {
-            flex: 1;
-            min-width: 100px;
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
         }
 
-        .radio-option input[type="radio"] {
-            display: none;
-        }
-
-        .radio-option label {
-            display: block;
-            background: var(--bg-dark);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 0.75rem;
-            text-align: center;
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: none;
-            font-size: 0.9rem;
+            accent-color: var(--accent-blue);
         }
 
-        .radio-option input[type="radio"]:checked + label {
-            border-color: var(--accent-blue);
-            background: rgba(88, 166, 255, 0.1);
-            color: var(--accent-blue);
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            text-transform: none;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .info-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-footer button {
+            flex: 1;
         }
 
         /* Transaction List */
@@ -582,13 +593,8 @@
                 font-size: 0.8rem;
             }
 
-            .radio-group {
-                flex-direction: column;
-            }
-
-            .radio-option {
-                flex: none;
-                width: 100%;
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -740,48 +746,17 @@
                 <button class="close-btn" onclick="closeModal()">×</button>
             </div>
             <form id="transactionForm" onsubmit="saveTransaction(event)">
-                <input type="hidden" id="transactionId">
+                <input type="hidden" id="editIndex" value="">
+                <input type="hidden" id="recurrentGroupId" value="">
                 
                 <div class="form-group">
-                    <label>Tipo</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="tipoReceita" name="tipo" value="Receita" checked>
-                            <label for="tipoReceita">💵 Receita</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="tipoDespesa" name="tipo" value="Despesa">
-                            <label for="tipoDespesa">💸 Despesa</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="descricao">Descrição</label>
-                    <input type="text" id="descricao" required>
+                    <input type="text" id="descricao" required placeholder="Ex: Aluguel, Supermercado...">
                 </div>
 
                 <div class="form-group">
                     <label for="valor">Valor (R$)</label>
-                    <input type="number" id="valor" step="0.01" min="0" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="categoria">Categoria</label>
-                    <select id="categoria" required>
-                        <option value="">Selecione...</option>
-                        <option value="Alimentação">🍔 Alimentação</option>
-                        <option value="Transporte">🚗 Transporte</option>
-                        <option value="Moradia">🏠 Moradia</option>
-                        <option value="Saúde">🏥 Saúde</option>
-                        <option value="Educação">📚 Educação</option>
-                        <option value="Lazer">🎮 Lazer</option>
-                        <option value="Compras">🛍️ Compras</option>
-                        <option value="Investimentos">📈 Investimentos</option>
-                        <option value="Salário">💼 Salário</option>
-                        <option value="Freelance">💻 Freelance</option>
-                        <option value="Outros">📦 Outros</option>
-                    </select>
+                    <input type="number" id="valor" step="0.01" min="0" required placeholder="0,00">
                 </div>
 
                 <div class="form-group">
@@ -789,23 +764,52 @@
                     <input type="date" id="data" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Status</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="statusPago" name="pago" value="true" checked>
-                            <label for="statusPago">✅ Pago</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="statusPendente" name="pago" value="false">
-                            <label for="statusPendente">⏰ Pendente</label>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <select id="tipo" required onchange="updateRecurrentOptions()">
+                            <option value="Despesa">Despesa</option>
+                            <option value="Receita">Receita</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" required>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Moradia">Moradia</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Salário">Salário</option>
+                            <option value="Investimentos">Investimentos</option>
+                            <option value="Outros">Outros</option>
+                        </select>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
-                    <button type="submit" class="success" style="flex: 1;">Salvar</button>
-                    <button type="button" class="secondary" onclick="closeModal()" style="flex: 1;">Cancelar</button>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="recorrente" name="recorrente" onchange="toggleRecurrentMonths()">
+                    <label for="recorrente">🔄 Transação recorrente (repete mensalmente)</label>
+                </div>
+
+                <div class="form-group" id="recurrentMonthsGroup" style="display: none;">
+                    <label for="mesesRecorrentes">Quantidade de Meses</label>
+                    <input type="number" id="mesesRecorrentes" min="1" max="120" placeholder="Ex: 12 para 1 ano">
+                    <div class="info-text">
+                        A transação será criada automaticamente para os próximos meses. 
+                        Deixe em branco para recorrência indefinida (60 meses).
+                    </div>
+                </div>
+
+                <div class="checkbox-group" id="pagoGroup">
+                    <input type="checkbox" id="pago" name="pago">
+                    <label for="pago">✅ Já foi pago (apenas para o primeiro mês)</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="success">Salvar</button>
                 </div>
             </form>
         </div>
@@ -839,27 +843,28 @@
             if (id) {
                 const transaction = transactions.find(t => t.id === id);
                 document.getElementById('modalTitle').textContent = 'Editar Transação';
-                document.getElementById('transactionId').value = id;
+                document.getElementById('editIndex').value = id;
                 document.getElementById('descricao').value = transaction.descricao;
                 document.getElementById('valor').value = transaction.valor;
                 document.getElementById('categoria').value = transaction.categoria;
+                document.getElementById('tipo').value = transaction.tipo;
                 document.getElementById('data').value = transaction.data.split('/').reverse().join('-');
+                document.getElementById('pago').checked = transaction.pago;
+                document.getElementById('recorrente').checked = transaction.recorrente || false;
+                document.getElementById('recurrentGroupId').value = transaction.recurrentGroupId || '';
                 
-                if (transaction.tipo === 'Receita') {
-                    document.getElementById('tipoReceita').checked = true;
-                } else {
-                    document.getElementById('tipoDespesa').checked = true;
+                if (transaction.recorrente) {
+                    document.getElementById('recurrentMonthsGroup').style.display = 'block';
                 }
                 
-                if (transaction.pago) {
-                    document.getElementById('statusPago').checked = true;
-                } else {
-                    document.getElementById('statusPendente').checked = true;
-                }
+                updateRecurrentOptions();
             } else {
                 document.getElementById('modalTitle').textContent = 'Nova Transação';
                 form.reset();
                 document.getElementById('data').value = new Date().toISOString().split('T')[0];
+                document.getElementById('recurrentMonthsGroup').style.display = 'none';
+                document.getElementById('tipo').value = 'Despesa';
+                updateRecurrentOptions();
             }
             
             modal.classList.add('active');
@@ -876,21 +881,70 @@
         function saveTransaction(e) {
             e.preventDefault();
             
-            const formData = {
-                id: editingId || Date.now().toString(),
-                tipo: document.querySelector('input[name="tipo"]:checked').value,
-                descricao: document.getElementById('descricao').value,
-                valor: parseFloat(document.getElementById('valor').value),
-                categoria: document.getElementById('categoria').value,
-                data: document.getElementById('data').value.split('-').reverse().join('/'),
-                pago: document.querySelector('input[name="pago"]:checked').value === 'true'
-            };
+            const tipo = document.getElementById('tipo').value;
+            const descricao = document.getElementById('descricao').value;
+            const valor = parseFloat(document.getElementById('valor').value);
+            const categoria = document.getElementById('categoria').value;
+            const data = document.getElementById('data').value.split('-').reverse().join('/');
+            const pago = document.getElementById('pago').checked;
+            const recorrente = document.getElementById('recorrente').checked;
+            const mesesRecorrentes = document.getElementById('mesesRecorrentes').value || 60;
+            const editIndex = document.getElementById('editIndex').value;
+            const recurrentGroupId = document.getElementById('recurrentGroupId').value || Date.now().toString();
 
-            if (editingId) {
-                const index = transactions.findIndex(t => t.id === editingId);
-                transactions[index] = formData;
+            if (editIndex) {
+                // Editar transação existente
+                const index = transactions.findIndex(t => t.id === editIndex);
+                transactions[index] = {
+                    ...transactions[index],
+                    tipo,
+                    descricao,
+                    valor,
+                    categoria,
+                    data,
+                    pago,
+                    recorrente,
+                    recurrentGroupId: transactions[index].recurrentGroupId
+                };
             } else {
-                transactions.push(formData);
+                // Nova transação
+                if (recorrente) {
+                    // Criar transações recorrentes
+                    const [day, month, year] = data.split('/');
+                    let currentDate = new Date(year, month - 1, day);
+                    
+                    for (let i = 0; i < parseInt(mesesRecorrentes); i++) {
+                        const newDate = new Date(currentDate);
+                        newDate.setMonth(currentDate.getMonth() + i);
+                        
+                        const formattedDate = `${String(newDate.getDate()).padStart(2, '0')}/${String(newDate.getMonth() + 1).padStart(2, '0')}/${newDate.getFullYear()}`;
+                        
+                        transactions.push({
+                            id: Date.now().toString() + '_' + i,
+                            tipo,
+                            descricao,
+                            valor,
+                            categoria,
+                            data: formattedDate,
+                            pago: i === 0 ? pago : false, // Apenas o primeiro pode estar pago
+                            recorrente: true,
+                            recurrentGroupId
+                        });
+                    }
+                } else {
+                    // Transação única
+                    transactions.push({
+                        id: Date.now().toString(),
+                        tipo,
+                        descricao,
+                        valor,
+                        categoria,
+                        data,
+                        pago,
+                        recorrente: false,
+                        recurrentGroupId: null
+                    });
+                }
             }
 
             saveToStorage();
@@ -915,6 +969,30 @@
 
         function saveToStorage() {
             localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
+
+        function updateRecurrentOptions() {
+            const tipo = document.getElementById('tipo').value;
+            const pagoGroup = document.getElementById('pagoGroup');
+            
+            if (tipo === 'Receita') {
+                pagoGroup.style.display = 'none';
+                document.getElementById('pago').checked = true;
+            } else {
+                pagoGroup.style.display = 'flex';
+            }
+        }
+
+        function toggleRecurrentMonths() {
+            const recorrente = document.getElementById('recorrente').checked;
+            const recurrentMonthsGroup = document.getElementById('recurrentMonthsGroup');
+            
+            if (recorrente) {
+                recurrentMonthsGroup.style.display = 'block';
+            } else {
+                recurrentMonthsGroup.style.display = 'none';
+                document.getElementById('mesesRecorrentes').value = '';
+            }
         }
 
         function getCurrentMonth() {
